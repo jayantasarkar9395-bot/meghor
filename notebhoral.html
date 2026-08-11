@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="as">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>নোট ভঁৰাল</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1f2d3d;
+    --navy-2:#28394d;
+    --card:#f3ead9;
+    --card-2:#ece0c8;
+    --stamp:#a13d2b;
+    --tab:#4f6b52;
+    --ink:#232420;
+    --ink-soft:#66625a;
+    --line:#d9cbac;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Noto Sans Bengali', sans-serif;
+    background:var(--card);
+    color:var(--ink);
+  }
+  .serif{font-family:'Noto Serif Bengali', serif;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit;}
+
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 6vw;
+    background:var(--navy);
+    color:var(--card);
+  }
+  .logo{ font-family:'Noto Serif Bengali'; font-size:19px; font-weight:700; display:flex; align-items:center; gap:10px; }
+  .logo .code{ font-family:'JetBrains Mono'; font-size:11px; color:var(--tab); border:1px solid var(--tab); padding:2px 6px; border-radius:2px; }
+  .navlinks{ display:flex; gap:30px; font-size:14px; opacity:.85; }
+  .navlinks a{ text-decoration:none; }
+  .nav-btn{
+    background:var(--stamp); color:var(--card);
+    border:none; padding:9px 18px; border-radius:2px;
+    font-size:13px; font-weight:600; cursor:pointer;
+    font-family:'Noto Sans Bengali';
+  }
+
+  /* HERO — drawer / catalog */
+  .hero{
+    background:var(--navy);
+    color:var(--card);
+    padding:70px 6vw 0;
+    position:relative;
+  }
+  .hero-inner{
+    max-width:1200px; margin:0 auto;
+    display:grid; grid-template-columns:1fr .8fr; gap:50px; align-items:end;
+    padding-bottom:0;
+  }
+  .hero-eyebrow{ font-family:'JetBrains Mono'; font-size:12px; letter-spacing:.1em; color:var(--tab); margin-bottom:18px; }
+  .hero h1{
+    font-size:clamp(38px,5vw,58px); line-height:1.22; font-weight:700; margin-bottom:20px;
+  }
+  .hero p{ font-size:15px; line-height:1.85; opacity:.75; max-width:440px; margin-bottom:34px; font-weight:300; }
+  .hero-ctas{ display:flex; gap:14px; margin-bottom:60px; flex-wrap:wrap; }
+  .btn-primary{
+    background:var(--stamp); color:var(--card); border:none;
+    padding:15px 30px; border-radius:2px; font-size:14px; font-weight:600; cursor:pointer;
+    font-family:'Noto Sans Bengali';
+  }
+  .btn-ghost{
+    background:transparent; color:var(--card); border:1px solid rgba(243,234,217,.35);
+    padding:14px 28px; border-radius:2px; font-size:14px; cursor:pointer;
+    font-family:'Noto Sans Bengali';
+  }
+
+  /* drawer visual */
+  .drawer{ position:relative; height:260px; }
+  .drawer-front{
+    position:absolute; bottom:0; left:0; right:0; height:110px;
+    background:var(--navy-2); border-top:3px solid var(--tab);
+    border-radius:3px 3px 0 0;
+    display:flex; align-items:center; padding:0 24px;
+    box-shadow:0 -6px 20px rgba(0,0,0,.25);
+  }
+  .drawer-label{ font-family:'JetBrains Mono'; font-size:12px; color:var(--card); opacity:.65; letter-spacing:.05em; }
+  .drawer-handle{ position:absolute; top:20px; left:50%; transform:translateX(-50%); width:60px; height:8px; background:var(--tab); border-radius:4px; }
+  .card-peek{
+    position:absolute; bottom:100px; width:170px; height:110px;
+    background:var(--card); border-radius:2px 2px 0 0;
+    box-shadow:0 -4px 14px rgba(0,0,0,.2);
+    padding:14px 16px;
+  }
+  .card-peek.p1{ left:8%; transform:rotate(-4deg); z-index:2; }
+  .card-peek.p2{ left:38%; transform:rotate(2deg); z-index:3; background:#faf4e6; }
+  .card-peek.p3{ left:66%; transform:rotate(-2deg); z-index:1; }
+  .card-peek .ctop{ font-family:'JetBrains Mono'; font-size:10px; color:var(--stamp); margin-bottom:8px; }
+  .card-peek .ctitle{ font-family:'Noto Serif Bengali'; font-size:13px; font-weight:600; color:var(--ink); line-height:1.4; }
+
+  /* SUBJECT TABS */
+  .subject-tabs{
+    display:flex; gap:0; max-width:1200px; margin:0 auto; padding:0 6vw;
+    position:relative; top:1px;
+  }
+  .tab{
+    background:var(--card); color:var(--ink);
+    padding:14px 22px; font-size:13px; font-weight:600;
+    border-radius:6px 6px 0 0; cursor:pointer;
+    border:1px solid var(--line); border-bottom:none;
+  }
+  .tab.active{ background:var(--card); color:var(--stamp); }
+  .tab:not(.active){ background:var(--card-2); color:var(--ink-soft); }
+
+  /* SECTION */
+  .section{ padding:70px 6vw 90px; max-width:1200px; margin:0 auto; border-top:1px solid var(--line); }
+  .section-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:42px; flex-wrap:wrap; gap:14px; }
+  .section-eyebrow{ font-family:'JetBrains Mono'; font-size:11px; letter-spacing:.08em; color:var(--tab); margin-bottom:10px; }
+  .section-title{ font-size:clamp(22px,3vw,30px); font-weight:700; }
+  .section-count{ font-family:'JetBrains Mono'; font-size:12px; color:var(--ink-soft); }
+
+  /* CATALOG CARDS */
+  .catalog{ display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:20px; }
+  .cat-card{
+    background:#faf4e6; border:1px solid var(--line); border-radius:2px;
+    display:flex; overflow:hidden;
+    box-shadow:0 3px 10px rgba(35,36,32,.05);
+  }
+  .cat-card .punch-col{
+    width:26px; background:var(--card-2);
+    display:flex; flex-direction:column; align-items:center; justify-content:space-evenly;
+    border-right:1px dashed var(--line);
+  }
+  .punch{ width:8px; height:8px; border-radius:50%; background:var(--card); box-shadow:inset 0 0 0 1px var(--line); }
+  .cat-card .body{ padding:20px 22px; flex:1; }
+  .cat-card .code-row{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .cat-card .code{ font-family:'JetBrains Mono'; font-size:11px; color:var(--ink-soft); }
+  .tab-chip{ font-size:10px; font-weight:700; background:var(--tab); color:var(--card); padding:3px 9px; border-radius:2px; }
+  .cat-card h3{ font-family:'Noto Serif Bengali'; font-size:17px; font-weight:600; margin-bottom:8px; }
+  .cat-card .desc{ font-size:13px; color:var(--ink-soft); line-height:1.7; margin-bottom:16px; }
+  .cat-card .meta{ display:flex; justify-content:space-between; align-items:center; border-top:1px dashed var(--line); padding-top:14px; }
+  .cat-card .price{ font-family:'JetBrains Mono'; font-size:15px; font-weight:600; color:var(--stamp); }
+  .buy-btn{
+    background:var(--navy); color:var(--card); border:none;
+    padding:7px 16px; font-size:12px; border-radius:2px; cursor:pointer;
+    font-family:'Noto Sans Bengali'; font-weight:500;
+  }
+
+  /* STAMP APPROVED SECTION */
+  .approved-strip{
+    background:var(--card-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:44px 6vw;
+  }
+  .approved-inner{
+    max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:30px;
+  }
+  .stat{ text-align:center; }
+  .stat .num{ font-family:'JetBrains Mono'; font-size:30px; font-weight:600; color:var(--stamp); }
+  .stat .lbl{ font-size:12px; color:var(--ink-soft); margin-top:6px; }
+
+  footer{
+    background:var(--navy); color:var(--card);
+    padding:44px 6vw; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;
+  }
+  footer .fsub{ font-size:12px; opacity:.55; margin-top:4px; }
+  footer .fright{ font-size:12px; opacity:.65; font-family:'JetBrains Mono'; }
+
+  @media(max-width:820px){
+    .navlinks{ display:none; }
+    .hero-inner{ grid-template-columns:1fr; }
+    .drawer{ display:none; }
+    .subject-tabs{ overflow-x:auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">নোট ভঁৰাল <span class="code">v.স্কুল</span></div>
+  <div class="navlinks">
+    <a href="#catalog">ক্যাটালগ</a>
+    <a href="#stats">আমাৰ বিষয়ে</a>
+    <a href="#contact">যোগাযোগ</a>
+  </div>
+  <button class="nav-btn">নোট জমা দিয়ক</button>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">REG.NO — 001 · ছাত্ৰ পৰিচালিত ভঁৰাল</div>
+      <h1 class="serif">এখন ভঁৰাল, হাজাৰ<br>ছাত্ৰৰ নোট</h1>
+      <p>শ্ৰেণী আৰু বিষয় অনুসৰি সজাই ৰখা যাচাই কৰা ক্লাছ নোটৰ ভঁৰাল। যিটো নোটে সঁচাকৈ কামত আহে, সেইটোৱে ইয়াত ঠাই পায়।</p>
+      <div class="hero-ctas">
+        <button class="btn-primary">ক্যাটালগ চাওক</button>
+        <button class="btn-ghost">কেনেকৈ কাম কৰে</button>
+      </div>
+    </div>
+    <div class="drawer">
+      <div class="card-peek p1">
+        <div class="ctop">SCI · ৯৯২</div>
+        <div class="ctitle">তাপ আৰু উষ্মতা</div>
+      </div>
+      <div class="card-peek p2">
+        <div class="ctop">MATH · ৭৭৫</div>
+        <div class="ctitle">বীজগণিত সূত্ৰ</div>
+      </div>
+      <div class="card-peek p3">
+        <div class="ctop">HIST · ৪৫০</div>
+        <div class="ctitle">স্বাধীনতা সংগ্ৰাম</div>
+      </div>
+      <div class="drawer-front">
+        <div class="drawer-handle"></div>
+        <div class="drawer-label">DRAWER 03 — দ্বাদশ শ্ৰেণী</div>
+      </div>
+    </div>
+  </div>
+  <div class="subject-tabs">
+    <div class="tab active">সকলো</div>
+    <div class="tab">পদাৰ্থ বিজ্ঞান</div>
+    <div class="tab">গণিত</div>
+    <div class="tab">ৰসায়ন</div>
+    <div class="tab">ইতিহাস</div>
+    <div class="tab">অৰ্থনীতি</div>
+  </div>
+</div>
+
+<section class="section" id="catalog">
+  <div class="section-head">
+    <div>
+      <div class="section-eyebrow">CATALOG — দ্বাদশ শ্ৰেণী</div>
+      <h2 class="section-title serif">যাচাই কৰা নোট সমূহ</h2>
+    </div>
+    <div class="section-count">৬ টা প্ৰৱিষ্টি দেখুৱা হৈছে</div>
+  </div>
+  <div class="catalog">
+    <div class="cat-card">
+      <div class="punch-col"><div class="punch"></div><div class="punch"></div><div class="punch"></div></div>
+      <div class="body">
+        <div class="code-row"><span class="code">SCI · ৯৯২.১</span><span class="tab-chip">পদাৰ্থ বিজ্ঞান</span></div>
+        <h3>গতি আৰু বল</h3>
+        <div class="desc">ডায়াগ্ৰাম, সূত্ৰ আৰু আগৰ প্ৰশ্নপত্ৰৰ সমাধানসহ ৪৫ পৃষ্ঠাৰ নোট।</div>
+        <div class="meta"><span class="price mono">৳৮০</span><button class="buy-btn">কিনক</button></div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <div class="punch-col"><div class="punch"></div><div class="punch"></div><div class="punch"></div></div>
+      <div class="body">
+        <div class="code-row"><span class="code">MATH · ৭৭৫.৩</span><span class="tab-chip">গণিত</span></div>
+        <h3>ত্ৰিকোণমিতি</h3>
+        <div class="desc">ধাপে ধাপে সমাধান আৰু ৩০ টা অনুশীলনী প্ৰশ্নসহ।</div>
+        <div class="meta"><span class="price mono">৳৬০</span><button class="buy-btn">কিনক</button></div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <div class="punch-col"><div class="punch"></div><div class="punch"></div><div class="punch"></div></div>
+      <div class="body">
+        <div class="code-row"><span class="code">HIST · ৪৫০.২</span><span class="tab-chip">ইতিহাস</span></div>
+        <h3>অসমৰ স্বাধীনতা সংগ্ৰাম</h3>
+        <div class="desc">সাল-তাৰিখ আৰু গুৰুত্বপূৰ্ণ ঘটনাৰ চমু তালিকাসহ।</div>
+        <div class="meta"><span class="price mono">৳৫৫</span><button class="buy-btn">কিনক</button></div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <div class="punch-col"><div class="punch"></div><div class="punch"></div><div class="punch"></div></div>
+      <div class="body">
+        <div class="code-row"><span class="code">CHEM · ৬৬০.১</span><span class="tab-chip">ৰসায়ন</span></div>
+        <h3>জৈৱ ৰসায়ন</h3>
+        <div class="desc">বিক্ৰিয়া প্ৰক্ৰিয়া আৰু গুৰুত্বপূৰ্ণ প্ৰশ্নসহ ৫০ পৃষ্ঠা।</div>
+        <div class="meta"><span class="price mono">৳৯০</span><button class="buy-btn">কিনক</button></div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <div class="punch-col"><div class="punch"></div><div class="punch"></div><div class="punch"></div></div>
+      <div class="body">
+        <div class="code-row"><span class="code">ECO · ৩৩০.৪</span><span class="tab-chip">অৰ্থনীতি</span></div>
+        <h3>ভাৰতীয় অৰ্থনীতিৰ মূল ধাৰণা</h3>
+        <div class="desc">গ্ৰাফ আৰু উদাহৰণসহ সহজ ভাষাত বুজাই দিয়া নোট।</div>
+        <div class="meta"><span class="price mono">৳৭০</span><button class="buy-btn">কিনক</button></div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <div class="punch-col"><div class="punch"></div><div class="punch"></div><div class="punch"></div></div>
+      <div class="body">
+        <div class="code-row"><span class="code">ENG · ২২০.১</span><span class="tab-chip">ইংৰাজী</span></div>
+        <h3>ব্যাকৰণ — এক নজৰত</h3>
+        <div class="desc">টেন্স, ভইচ আৰু নেৰেচনৰ নিয়মসমূহ উদাহৰণসহ।</div>
+        <div class="meta"><span class="price mono">৳৫০</span><button class="buy-btn">কিনক</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="approved-strip" id="stats">
+  <div class="approved-inner">
+    <div class="stat"><div class="num">১২০+</div><div class="lbl">যাচাই কৰা নোট</div></div>
+    <div class="stat"><div class="num">৩২</div><div class="lbl">বিদ্যালয় আৰু ক'লেজ</div></div>
+    <div class="stat"><div class="num">৪.৮</div><div class="lbl">গড় ৰেটিং</div></div>
+    <div class="stat"><div class="num">২৪ ঘ.</div><div class="lbl">ডেলিভাৰীৰ সময়</div></div>
+  </div>
+</div>
+
+<footer id="contact">
+  <div>
+    <div class="logo serif">নোট ভঁৰাল</div>
+    <div class="fsub">ছাত্ৰ পৰিচালিত, ছাত্ৰৰ বাবে</div>
+  </div>
+  <div class="fright">notebhoral@example.com</div>
+</footer>
+
+</body>
+</html>
